@@ -1,6 +1,6 @@
 """LLM服务模块"""
 
-from hello_agents import HelloAgentsLLM
+from yaho_agents import HelloAgentsLLM
 from ..config import get_settings
 
 # 全局LLM实例

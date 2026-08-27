@@ -1,9 +1,9 @@
 """高德地图MCP服务封装"""
 
 from typing import List, Dict, Any, Optional
-from hello_agents.tools import MCPTool
+from yaho_agents.tools import MCPTool
 from ..config import get_settings
-from ..models.schemas import Location, POIInfo, WeatherInfo
+from ..models.schemas import Location, POIInfo, WeatherInfo, RouteInfo
 
 # 全局MCP工具实例
 _amap_mcp_tool = None
@@ -126,7 +126,7 @@ class AmapService:
         origin_city: Optional[str] = None,
         destination_city: Optional[str] = None,
         route_type: str = "walking"
-    ) -> Dict[str, Any]:
+    ) -> Optional[RouteInfo]:
         """
         规划路线
         
@@ -179,11 +179,11 @@ class AmapService:
             print(f"路线规划结果: {result[:200]}...")
             
             # TODO: 解析实际的路线数据
-            return {}
+            return None
             
         except Exception as e:
             print(f"❌ 路线规划失败: {str(e)}")
-            return {}
+            return None
     
     def geocode(self, address: str, city: Optional[str] = None) -> Optional[Location]:
         """

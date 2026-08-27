@@ -1,0 +1,7 @@
+{
+  "include": ["app", "yaho_agents", "run.py"],
+  "venvPath": ".",
+  "venv": ".venv",
+  "reportMissingImports": true,
+  "reportMissingModuleSource": "none"
+}
