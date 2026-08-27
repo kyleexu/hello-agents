@@ -1,7 +1,10 @@
 """工具注册表 - HelloAgents原生工具系统"""
 
-from typing import Optional, Any, Callable
+from collections.abc import Callable
+from typing import Any
+
 from .base import Tool
+
 
 class ToolRegistry:
     """
@@ -26,7 +29,7 @@ class ToolRegistry:
             auto_expand: 是否自动展开可展开的工具（默认True）
         """
         # 检查工具是否可展开
-        if auto_expand and hasattr(tool, 'expandable') and tool.expandable:
+        if auto_expand and hasattr(tool, "expandable") and tool.expandable:
             expanded_tools = tool.get_expanded_tools()
             if expanded_tools:
                 # 注册所有展开的子工具
@@ -56,10 +59,7 @@ class ToolRegistry:
         if name in self._functions:
             print(f"⚠️ 警告：工具 '{name}' 已存在，将被覆盖。")
 
-        self._functions[name] = {
-            "description": description,
-            "func": func
-        }
+        self._functions[name] = {"description": description, "func": func}
         print(f"✅ 工具 '{name}' 已注册。")
 
     def unregister(self, name: str):
@@ -73,11 +73,11 @@ class ToolRegistry:
         else:
             print(f"⚠️ 工具 '{name}' 不存在。")
 
-    def get_tool(self, name: str) -> Optional[Tool]:
+    def get_tool(self, name: str) -> Tool | None:
         """获取Tool对象"""
         return self._tools.get(name)
 
-    def get_function(self, name: str) -> Optional[Callable]:
+    def get_function(self, name: str) -> Callable | None:
         """获取工具函数"""
         func_info = self._functions.get(name)
         return func_info["func"] if func_info else None
@@ -100,7 +100,7 @@ class ToolRegistry:
                 # 简化参数传递，直接传入字符串
                 return tool.run({"input": input_text})
             except Exception as e:
-                return f"错误：执行工具 '{name}' 时发生异常: {str(e)}"
+                return f"错误：执行工具 '{name}' 时发生异常: {e!s}"
 
         # 查找函数工具
         elif name in self._functions:
@@ -108,7 +108,7 @@ class ToolRegistry:
             try:
                 return func(input_text)
             except Exception as e:
-                return f"错误：执行工具 '{name}' 时发生异常: {str(e)}"
+                return f"错误：执行工具 '{name}' 时发生异常: {e!s}"
 
         else:
             return f"错误：未找到名为 '{name}' 的工具。"
@@ -145,6 +145,7 @@ class ToolRegistry:
         self._tools.clear()
         self._functions.clear()
         print("🧹 所有工具已清空。")
+
 
 # 全局工具注册表
 global_registry = ToolRegistry()

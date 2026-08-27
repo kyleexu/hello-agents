@@ -1,0 +1,45 @@
+[project]
+name = "helloagents-trip-planner-backend"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["ruff>=0.8.0"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+include = ["app/**/*.py", "yaho_agents/**/*.py", "run.py"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "UP",
+    "BLE",
+    "DTZ",
+    "RUF",
+    "PIE",
+    "SIM",
+]
+ignore = [
+    "E501",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"yaho_agents/__init__.py" = ["E402"]
+"app/api/routes/*.py" = ["BLE001"]
+"app/services/*.py" = ["BLE001"]
+"yaho_agents/agents/simple_agent.py" = ["BLE001"]
+"yaho_agents/core/llm.py" = ["BLE001"]
+"yaho_agents/tools/registry.py" = ["BLE001"]
+"yaho_agents/tools/builtin/protocol_tools.py" = ["BLE001"]
+"yaho_agents/protocols/mcp/client.py" = ["BLE001"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
